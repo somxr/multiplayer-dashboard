@@ -53,11 +53,6 @@ def generate_data_job():
 def index():
     return render_template('index.html')
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
-    app.logger.info('Database tables created.')
-
 @app.route('/api/player-stats', methods=['GET'])
 def get_player_stats():
     # Get the latest stats
@@ -108,6 +103,7 @@ scheduler = APScheduler()
 # Initialize the database tables
 with app.app_context():
     db.create_all()
+    logger.info('Database tables created.')
 
 # Function to initialize and start the scheduler
 def start_scheduler():
