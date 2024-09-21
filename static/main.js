@@ -8,6 +8,7 @@ async function fetchData() {
   
   // Function to update the Active Players Chart
   function updateActivePlayersChart(chart, newLabel, newData) {
+    console.log("newData in updateActivePlayersChart", newData);
     chart.data.labels.push(newLabel);
     chart.data.datasets[0].data.push(newData);
   
@@ -29,15 +30,25 @@ async function fetchData() {
   
   async function updateCharts(charts) {
     const data = await fetchData();
+    console.log('Fetched data:', data);
   
     // Get current time for the label
     const currentTime = new Date().toLocaleTimeString();
   
+    // **Extract the latest data point**
+    const lastIndex = data.active_players.length - 1;
+  
+    // **Get the latest active players value**
+    const latestActivePlayers = data.active_players[lastIndex];
+  
+    // **Get the latest top scores**
+    const latestTopScores = data.top_scores[lastIndex];
+  
     // Update Active Players Chart
-    updateActivePlayersChart(charts.activePlayersChart, currentTime, data.active_players);
+    updateActivePlayersChart(charts.activePlayersChart, currentTime, latestActivePlayers);
   
     // Update Top Scores Chart
-    updateTopScoresChart(charts.topScoresChart, data.top_scores);
+    updateTopScoresChart(charts.topScoresChart, latestTopScores);
   }
   
   async function createCharts() {
@@ -89,7 +100,7 @@ async function fetchData() {
         datasets: [
           {
             label: 'Top Scores',
-            data: data.top_scores,
+            data: [], // Start with empty data
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
@@ -109,9 +120,16 @@ async function fetchData() {
       },
     });
   
-    // Initialize the Active Players Chart with the first data point
-    const initialTime = new Date().toLocaleTimeString();
-    updateActivePlayersChart(activePlayersChart, initialTime, data.active_players);
+    // **Initialize the charts with the latest data point**
+    if (data.active_players.length > 0) {
+      const lastIndex = data.active_players.length - 1;
+      const latestActivePlayers = data.active_players[lastIndex];
+      const latestTopScores = data.top_scores[lastIndex];
+      const initialTime = new Date().toLocaleTimeString();
+  
+      updateActivePlayersChart(activePlayersChart, initialTime, latestActivePlayers);
+      updateTopScoresChart(topScoresChart, latestTopScores);
+    }
   
     // Set up periodic data refresh every 5 seconds
     setInterval(() => {
