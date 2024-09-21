@@ -11,7 +11,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Configure SQLAlchemy for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///players.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///players.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///players.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -110,4 +111,4 @@ if __name__ == '__main__':
     )
 
     # Run the Flask app
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
