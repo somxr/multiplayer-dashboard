@@ -20,6 +20,9 @@ db = SQLAlchemy(app)
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Define the PlayerStats model
 class PlayerStats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,14 +44,19 @@ def generate_data_job():
         db.session.commit()
         app.logger.info('Generated new data and committed to the database.')
 
-# Initialize the database tables
-with app.app_context():
-    db.create_all()
+# # Initialize the database tables
+# with app.app_context():
+#     db.create_all()
 
 # Flask routes
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    app.logger.info('Database tables created.')
 
 @app.route('/api/player-stats', methods=['GET'])
 def get_player_stats():
@@ -97,11 +105,14 @@ def generate_dummy_data():
 # Scheduler configuration and start
 scheduler = APScheduler()
 
-if __name__ == '__main__':
-    # Initialize and start the scheduler after the app is fully set up
+# Initialize the database tables
+with app.app_context():
+    db.create_all()
+
+# Function to initialize and start the scheduler
+def start_scheduler():
     scheduler.init_app(app)
     scheduler.start()
-
     # Schedule the job to run every 5 seconds
     scheduler.add_job(
         id='Generate Data Job',
@@ -109,6 +120,11 @@ if __name__ == '__main__':
         trigger='interval',
         seconds=5
     )
+    app.logger.info('Scheduler started and job added.')
 
+# Start the scheduler
+start_scheduler()
+
+if __name__ == '__main__':
     # Run the Flask app
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
