@@ -1,14 +1,23 @@
+<!-- templates/index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Multiplayer Game Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <h1>Multiplayer Game Dashboard</h1>
-    <canvas id="activePlayersChart" width="400" height="200"></canvas>
-    <canvas id="topScoresChart" width="400" height="200"></canvas>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Multiplayer Game Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Multiplayer Game Dashboard</h1>
+  <div class="charts-wrapper">
+    <div class="chart-container">
+      <canvas id="activePlayersChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="topScoresChart"></canvas>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
 </html>
