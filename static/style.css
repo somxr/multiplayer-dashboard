@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: calc(16px + 0.390625vw);
+}
+
 /* Body styling */
 body {
   font-family: Arial, sans-serif;
@@ -68,6 +72,8 @@ h1 {
 
   /* Adjust heading font size for mobile */
   h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
 }
