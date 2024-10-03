@@ -2,60 +2,72 @@
 
 /* Reset default margins and paddings */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body styling */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #444444;
-    /* padding: 20px; */
-  }
-  
-  /* Heading styling */
-  h1 {
-    text-align: center;
-    font-family: field-gothic-condensed, sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    line-height: normal;
-    font-size: 7rem;
-    /* font-size: clamp(2rem, 9rem, 14vw); */
-    /* Adjusts between 2rem and 12vw, does not go smaller than 2rem or larger than 9rem */
-    margin: 0;
-    color: #fff;
-    padding: 1em;
-  }
-  
-  /* Chart wrapper */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #444444;
+}
+
+/* Heading styling */
+h1 {
+  text-align: center;
+  font-family: field-gothic-condensed, sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  line-height: normal;
+  font-size: 5rem;
+  margin: 0;
+  color: #fff;
+  padding: 1em;
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
+/* Chart wrapper */
+.charts-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* Chart container */
+.chart-container {
+  width: 45%;
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Canvas styling */
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Stack charts vertically */
   .charts-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  /* Chart container */
+
+  /* Full-width chart containers */
   .chart-container {
-    width: 45%;
-    margin-bottom: 30px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px; /* Optional: Adjust padding for mobile */
   }
-  
-  /* Canvas styling */
-  .chart-container canvas {
-    width: 100% !important;
-    height: auto !important;
+
+  /* Adjust heading font size for mobile */
+  h1 {
+    font-size: 3rem;
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .chart-container {
-      width: 100%;
-    }
-  }
-  
+}
